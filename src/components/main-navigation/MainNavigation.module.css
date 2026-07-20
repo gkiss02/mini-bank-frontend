@@ -1,0 +1,24 @@
+.list {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+  margin-bottom: 1.5rem;
+}
+
+.list a {
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-weight: 500;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+
+.list a:hover {
+  color: var(--text-hover);
+}
+
+.list a.active {
+  color: var(--accent);
+  font-weight: 600;
+  border-bottom: 2px solid var(--accent);
+}

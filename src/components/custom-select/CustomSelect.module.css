@@ -1,0 +1,18 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.select {
+  padding: 0.25rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  background: var(--bg-surface);
+}
+
+.select:focus {
+  outline: none;
+  border-color: var(--accent);
+}

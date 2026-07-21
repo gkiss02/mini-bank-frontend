@@ -4,7 +4,7 @@ interface CustomInputProps {
   type: "text" | "number";
   label: string;
   placeholder: string;
-  value: string;
+  value: string | number;
   onChange: (value: string | number) => void;
 }
 

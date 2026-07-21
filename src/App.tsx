@@ -6,6 +6,7 @@ import DepositPage from "./pages/deposit/DepositPage";
 import TransferPage from "./pages/transfer/TransferPage";
 import WithdrawPage from "./pages/withdraw/WithdrawPage";
 import ErrorPage from "./pages/error/ErrorPage";
+import { AccountsProvider } from "./context/AccountsContext";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -24,9 +25,9 @@ const App = () => {
   ]);
 
   return (
-    <>
+    <AccountsProvider>
       <RouterProvider router={router} />
-    </>
+    </AccountsProvider>
   );
 };
 

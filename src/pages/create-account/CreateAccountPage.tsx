@@ -3,19 +3,37 @@ import CustomButton from "../../components/custom-button/CustomButton";
 import CustomSelect from "../../components/custom-select/CustomSelect";
 import { AccountType } from "../../types/account";
 import CustomInput from "../../components/custom-input/CustomInput";
+import { useAccounts } from "../../hooks/useAccounts";
 import styles from "./CreateAccountPage.module.css";
 
 const CreateAccountPage = () => {
+  const { createAccount } = useAccounts();
   const [accountType, setAccountType] = useState<AccountType>(
     AccountType.NORMAL
   );
   const [accountNumber, setAccountNumber] = useState<string>("");
   const [username, setUsername] = useState<string>("");
+  const [interestRate, setInterestRate] = useState<string | number>("");
 
   const handleClick = () => {
-    console.log("accountType", accountType);
-    console.log("accountNumber", accountNumber);
-    console.log("username", username);
+    if (accountType === AccountType.SAVINGS) {
+      createAccount({
+        accountType: AccountType.SAVINGS,
+        accountNumber,
+        userName: username,
+        interestRate: Number(interestRate),
+      });
+    } else {
+      createAccount({
+        accountType: AccountType.NORMAL,
+        accountNumber,
+        userName: username,
+      });
+    }
+
+    setAccountNumber("");
+    setUsername("");
+    setInterestRate("");
   };
 
   return (
@@ -41,8 +59,19 @@ const CreateAccountPage = () => {
         value={username}
         onChange={(value) => setUsername(String(value))}
       />
+      {accountType === AccountType.SAVINGS && (
+        <CustomInput
+          type="number"
+          label="Interest rate (%)"
+          placeholder="e.g 2.5%"
+          value={interestRate}
+          onChange={setInterestRate}
+        />
+      )}
       <p className={styles.hint}>
-        Normal accounts get a €10.00 welcome bonus and can overdraw to €-500.00.
+        {accountType === AccountType.NORMAL
+          ? "Normal accounts get a €10.00 welcome bonus and can overdraw to €-500.00."
+          : "Savings accounts cannot go below €0.00."}
       </p>
       <CustomButton onClick={handleClick}>Create account</CustomButton>
     </section>

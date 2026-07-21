@@ -1,26 +1,25 @@
-import type { AccountType } from "../../types/account";
 import styles from "./CustomDropdown.module.css";
 
-interface CustomDropdownProps {
+interface CustomDropdownProps<T extends string> {
   label: string;
-  values: AccountType[];
-  value: AccountType;
-  onChange: (value: AccountType) => void;
+  values: T[];
+  value: T;
+  onChange: (value: T) => void;
 }
 
-const CustomDropdown = ({
+const CustomDropdown = <T extends string>({
   values,
   label,
   value,
   onChange,
-}: CustomDropdownProps) => {
+}: CustomDropdownProps<T>) => {
   return (
     <div className={styles.container}>
       <label>{label}</label>
       <select
         className={styles.select}
         value={value}
-        onChange={(event) => onChange(event.target.value as AccountType)}
+        onChange={(event) => onChange(event.target.value as T)}
       >
         {values.map((value) => (
           <option key={value} value={value}>

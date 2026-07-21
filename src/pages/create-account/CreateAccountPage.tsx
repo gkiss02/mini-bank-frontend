@@ -39,7 +39,7 @@ const CreateAccountPage = () => {
   return (
     <section className={styles.container}>
       <h2>Create account page</h2>
-      <CustomDropdown
+      <CustomDropdown<AccountType>
         values={Object.values(AccountType)}
         label="Account type"
         value={accountType}

@@ -2,6 +2,7 @@ import styles from "./CustomDropdown.module.css";
 
 interface CustomDropdownProps<T extends string> {
   label: string;
+  placeholder?: string;
   values: T[];
   value: T;
   onChange: (value: T) => void;
@@ -10,6 +11,7 @@ interface CustomDropdownProps<T extends string> {
 const CustomDropdown = <T extends string>({
   values,
   label,
+  placeholder,
   value,
   onChange,
 }: CustomDropdownProps<T>) => {
@@ -21,6 +23,11 @@ const CustomDropdown = <T extends string>({
         value={value}
         onChange={(event) => onChange(event.target.value as T)}
       >
+        {placeholder && (
+          <option value="" disabled>
+            {placeholder}
+          </option>
+        )}
         {values.map((value) => (
           <option key={value} value={value}>
             {value}

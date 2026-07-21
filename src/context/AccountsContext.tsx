@@ -1,5 +1,9 @@
 import { useState, type ReactNode } from "react";
-import { AccountType, type Account, type CreateAccountInput } from "../types/account";
+import {
+  AccountType,
+  type Account,
+  type CreateAccountInput,
+} from "../types/account";
 import { AccountsContext } from "./accounts-context";
 
 const NORMAL_ACCOUNT_WELCOME_BONUS = 10;
@@ -13,13 +17,13 @@ export const AccountsProvider = ({ children }: { children: ReactNode }) => {
         ? {
             accountType: AccountType.NORMAL,
             accountNumber: input.accountNumber,
-            userName: input.userName,
+            username: input.userName,
             balance: NORMAL_ACCOUNT_WELCOME_BONUS,
           }
         : {
             accountType: AccountType.SAVINGS,
             accountNumber: input.accountNumber,
-            userName: input.userName,
+            username: input.userName,
             balance: 0,
             interestRate: input.interestRate,
           };

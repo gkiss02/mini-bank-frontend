@@ -5,7 +5,7 @@ export enum AccountType {
 
 interface BaseAccount {
   readonly accountNumber: string;
-  readonly userName: string;
+  readonly username: string;
   readonly balance: number;
 }
 

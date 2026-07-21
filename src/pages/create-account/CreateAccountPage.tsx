@@ -40,8 +40,8 @@ const CreateAccountPage = () => {
     <section className={styles.container}>
       <h2>Create account page</h2>
       <CustomDropdown<AccountType>
-        values={Object.values(AccountType)}
         label="Account type"
+        values={Object.values(AccountType)}
         value={accountType}
         onChange={setAccountType}
       />

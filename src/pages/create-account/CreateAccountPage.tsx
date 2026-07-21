@@ -1,10 +1,10 @@
 import { useState } from "react";
 import CustomButton from "../../components/custom-button/CustomButton";
-import CustomSelect from "../../components/custom-select/CustomSelect";
 import { AccountType } from "../../types/account";
 import CustomInput from "../../components/custom-input/CustomInput";
 import { useAccounts } from "../../hooks/useAccounts";
 import styles from "./CreateAccountPage.module.css";
+import CustomDropdown from "../../components/custom-dropdown/CustomDropdown";
 
 const CreateAccountPage = () => {
   const { createAccount } = useAccounts();
@@ -39,7 +39,7 @@ const CreateAccountPage = () => {
   return (
     <section className={styles.container}>
       <h2>Create account page</h2>
-      <CustomSelect
+      <CustomDropdown
         values={Object.values(AccountType)}
         label="Account type"
         value={accountType}

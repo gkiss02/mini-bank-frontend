@@ -1,19 +1,19 @@
 import type { AccountType } from "../../types/account";
-import styles from "./CustomSelect.module.css";
+import styles from "./CustomDropdown.module.css";
 
-interface CustomSelectProps {
+interface CustomDropdownProps {
   label: string;
   values: AccountType[];
   value: AccountType;
   onChange: (value: AccountType) => void;
 }
 
-const CustomSelect = ({
+const CustomDropdown = ({
   values,
   label,
   value,
   onChange,
-}: CustomSelectProps) => {
+}: CustomDropdownProps) => {
   return (
     <div className={styles.container}>
       <label>{label}</label>
@@ -32,4 +32,4 @@ const CustomSelect = ({
   );
 };
 
-export default CustomSelect;
+export default CustomDropdown;

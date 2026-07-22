@@ -1,0 +1,35 @@
+table.accounts-table {
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+table.accounts-table thead tr {
+  text-align: left;
+  border-bottom: 1px solid var(--border-mid);
+  color: #6a6a66;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+table.accounts-table th {
+  padding: 0.5rem 0.6rem;
+}
+
+table.accounts-table th.align-right,
+table.accounts-table td.align-right {
+  text-align: right;
+}
+
+table.accounts-table td {
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+table.accounts-table td.numeric {
+  font-variant-numeric: tabular-nums;
+}
+
+table.accounts-table td.rate {
+  color: var(--text-muted);
+}

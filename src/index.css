@@ -34,7 +34,6 @@ p {
 body {
   display: flex;
   justify-content: center;
-  min-height: 100vh;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-color: var(--bg-page);
 }

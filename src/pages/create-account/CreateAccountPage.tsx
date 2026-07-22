@@ -10,7 +10,7 @@ import CustomDropdown from "../../components/custom-dropdown/CustomDropdown";
 import CustomBanner from "../../components/custom-banner/CustomBanner";
 
 const CreateAccountPage = () => {
-  const { accounts, createAccount } = useAccounts();
+  const { createAccount } = useAccounts();
   const [accountType, setAccountType] = useState<AccountType>(
     AccountType.NORMAL
   );
@@ -20,52 +20,50 @@ const CreateAccountPage = () => {
   const [message, setMessage] = useState<BannerMessage | null>(null);
 
   const handleClick = () => {
-    if (
-      !accountNumber ||
-      !username ||
-      (accountType === AccountType.SAVINGS && !interestRate)
-    ) {
-      setMessage({ variant: "error", text: "Please fill all fields." });
-      return;
-    }
+    try {
+      if (
+        !accountNumber ||
+        !username ||
+        (accountType === AccountType.SAVINGS && !interestRate)
+      ) {
+        throw new Error("Please fill all fields.");
+      }
 
-    if (accounts.some((account) => account.accountNumber === accountNumber)) {
+      const isSavings = accountType === AccountType.SAVINGS;
+
+      if (isSavings) {
+        createAccount({
+          accountType: AccountType.SAVINGS,
+          accountNumber,
+          username,
+          interestRate: Number(interestRate),
+        });
+      } else {
+        createAccount({
+          accountType: AccountType.NORMAL,
+          accountNumber,
+          username,
+        });
+      }
+
+      setMessage({
+        variant: "success",
+        text: isSavings
+          ? `Savings account ${accountNumber} created for ${username}`
+          : `Account ${accountNumber} created for ${username} with a €${NORMAL_ACCOUNT_WELCOME_BONUS.toFixed(
+              2
+            )} welcome bonus.`,
+      });
+
+      setAccountNumber("");
+      setUsername("");
+      setInterestRate("");
+    } catch (error) {
       setMessage({
         variant: "error",
-        text: `Account ${accountNumber} already exists. `,
-      });
-      return;
-    }
-
-    const isSavings = accountType === AccountType.SAVINGS;
-
-    if (isSavings) {
-      createAccount({
-        accountType: AccountType.SAVINGS,
-        accountNumber,
-        username,
-        interestRate: Number(interestRate),
-      });
-    } else {
-      createAccount({
-        accountType: AccountType.NORMAL,
-        accountNumber,
-        username,
+        text: error instanceof Error ? error.message : "Something went wrong.",
       });
     }
-
-    setMessage({
-      variant: "success",
-      text: isSavings
-        ? `Savings account ${accountNumber} created for ${username}`
-        : `Account ${accountNumber} created for ${username} with a €${NORMAL_ACCOUNT_WELCOME_BONUS.toFixed(
-            2
-          )} welcome bonus.`,
-    });
-
-    setAccountNumber("");
-    setUsername("");
-    setInterestRate("");
   };
 
   return (

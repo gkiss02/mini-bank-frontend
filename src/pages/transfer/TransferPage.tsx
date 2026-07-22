@@ -15,15 +15,25 @@ const TransferPage = () => {
   const [message, setMessage] = useState<BannerMessage | null>(null);
 
   const handleClick = () => {
-    if (accountNumberFrom === accountNumberTo) {
+    try {
+      if (!accountNumberFrom || !accountNumberTo || !amount) {
+        throw new Error("Please fill all fields.");
+      }
+
+      if (accountNumberFrom === accountNumberTo) {
+        throw new Error("From and to account cannot be the same.");
+      }
+
+      setMessage({
+        variant: "success",
+        text: `Transferred ${amount} from ${accountNumberFrom} to ${accountNumberTo}.`,
+      });
+    } catch (error) {
       setMessage({
         variant: "error",
-        text: "From and to account cannot be the same.",
+        text: error instanceof Error ? error.message : "Something went wrong.",
       });
-      return;
     }
-
-    setMessage({ variant: "success", text: "Transfer completed." });
   };
 
   return (

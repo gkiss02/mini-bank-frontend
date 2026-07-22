@@ -11,6 +11,12 @@ export const AccountsProvider = ({ children }: { children: ReactNode }) => {
   const [accounts, setAccounts] = useState<Account[]>([]);
 
   const createAccount = (input: CreateAccountInput) => {
+    if (
+      accounts.some((account) => account.accountNumber === input.accountNumber)
+    ) {
+      throw new Error(`Account ${input.accountNumber} already exists.`);
+    }
+
     const account: Account =
       input.accountType === AccountType.NORMAL
         ? {

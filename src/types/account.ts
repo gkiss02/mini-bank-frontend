@@ -3,6 +3,15 @@ export enum AccountType {
   SAVINGS = "SAVINGS",
 }
 
+export const getAccountTypeLabel = (accountType: AccountType): string => {
+  switch (accountType) {
+    case AccountType.NORMAL:
+      return "Normal";
+    case AccountType.SAVINGS:
+      return "Savings";
+  }
+};
+
 interface BaseAccount {
   readonly accountNumber: string;
   readonly username: string;

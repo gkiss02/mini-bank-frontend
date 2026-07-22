@@ -20,10 +20,10 @@ const DepositPage = () => {
       <CustomDropdown<string>
         label="Account"
         placeholder="Select account..."
-        values={accounts.map(
-          (account) =>
-            `${account.accountNumber} — ${account.username} (€${account.balance})`
-        )}
+        options={accounts.map((account) => ({
+          value: account.accountNumber,
+          label: `${account.accountNumber} — ${account.username} (€${account.balance})`,
+        }))}
         value={accountNumber}
         onChange={setAccountNumber}
       />

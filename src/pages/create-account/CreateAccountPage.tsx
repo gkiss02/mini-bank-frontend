@@ -1,6 +1,6 @@
 import { useState } from "react";
 import CustomButton from "../../components/custom-button/CustomButton";
-import { AccountType } from "../../types/account";
+import { AccountType, getAccountTypeLabel } from "../../types/account";
 import CustomInput from "../../components/custom-input/CustomInput";
 import { useAccounts } from "../../hooks/useAccounts";
 import styles from "./CreateAccountPage.module.css";
@@ -41,7 +41,10 @@ const CreateAccountPage = () => {
       <h2>Create account page</h2>
       <CustomDropdown<AccountType>
         label="Account type"
-        values={Object.values(AccountType)}
+        options={Object.values(AccountType).map((type) => ({
+          value: type,
+          label: getAccountTypeLabel(type),
+        }))}
         value={accountType}
         onChange={setAccountType}
       />

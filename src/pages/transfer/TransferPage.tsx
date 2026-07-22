@@ -23,20 +23,20 @@ const TransferPage = () => {
       <CustomDropdown<string>
         label="From account"
         placeholder="Select account..."
-        values={accounts.map(
-          (account) =>
-            `${account.accountNumber} — ${account.username} (€${account.balance})`
-        )}
+        options={accounts.map((account) => ({
+          value: account.accountNumber,
+          label: `${account.accountNumber} — ${account.username} (€${account.balance})`,
+        }))}
         value={accountNumberFrom}
         onChange={setAccountNumberFrom}
       />
       <CustomDropdown<string>
         label="To account"
         placeholder="Select account..."
-        values={accounts.map(
-          (account) =>
-            `${account.accountNumber} — ${account.username} (€${account.balance})`
-        )}
+        options={accounts.map((account) => ({
+          value: account.accountNumber,
+          label: `${account.accountNumber} — ${account.username} (€${account.balance})`,
+        }))}
         value={accountNumberTo}
         onChange={setAccountNumberTo}
       />

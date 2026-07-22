@@ -1,15 +1,20 @@
 import styles from "./CustomDropdown.module.css";
 
+export interface CustomDropdownOption<T extends string> {
+  value: T;
+  label: string;
+}
+
 interface CustomDropdownProps<T extends string> {
   label: string;
   placeholder?: string;
-  values: T[];
+  options: CustomDropdownOption<T>[];
   value: T;
   onChange: (value: T) => void;
 }
 
 const CustomDropdown = <T extends string>({
-  values,
+  options,
   label,
   placeholder,
   value,
@@ -28,9 +33,9 @@ const CustomDropdown = <T extends string>({
             {placeholder}
           </option>
         )}
-        {values.map((value) => (
-          <option key={value} value={value}>
-            {value}
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
           </option>
         ))}
       </select>

@@ -1,0 +1,1 @@
+export const NORMAL_ACCOUNT_WELCOME_BONUS = 10;

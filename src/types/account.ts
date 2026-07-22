@@ -33,11 +33,11 @@ export type CreateAccountInput =
   | {
       accountType: AccountType.NORMAL;
       accountNumber: string;
-      userName: string;
+      username: string;
     }
   | {
       accountType: AccountType.SAVINGS;
       accountNumber: string;
-      userName: string;
+      username: string;
       interestRate: number;
     };

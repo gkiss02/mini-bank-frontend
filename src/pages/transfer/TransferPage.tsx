@@ -1,8 +1,10 @@
 import { useState } from "react";
+import CustomBanner from "../../components/custom-banner/CustomBanner";
 import CustomButton from "../../components/custom-button/CustomButton";
 import CustomDropdown from "../../components/custom-dropdown/CustomDropdown";
 import CustomInput from "../../components/custom-input/CustomInput";
 import { useAccounts } from "../../hooks/useAccounts";
+import type { BannerMessage } from "../../types/banner";
 import styles from "./TransferPage.module.css";
 
 const TransferPage = () => {
@@ -10,11 +12,18 @@ const TransferPage = () => {
   const [accountNumberFrom, setAccountNumberFrom] = useState<string>("");
   const [accountNumberTo, setAccountNumberTo] = useState<string>("");
   const [amount, setAmount] = useState<string | number>("");
+  const [message, setMessage] = useState<BannerMessage | null>(null);
 
   const handleClick = () => {
-    console.log("accountNumberFrom", accountNumberFrom);
-    console.log("accountNumberTo", accountNumberTo);
-    console.log("amount", amount);
+    if (accountNumberFrom === accountNumberTo) {
+      setMessage({
+        variant: "error",
+        text: "From and to account cannot be the same.",
+      });
+      return;
+    }
+
+    setMessage({ variant: "success", text: "Transfer completed." });
   };
 
   return (
@@ -28,7 +37,10 @@ const TransferPage = () => {
           label: `${account.accountNumber} — ${account.username} (€${account.balance})`,
         }))}
         value={accountNumberFrom}
-        onChange={setAccountNumberFrom}
+        onChange={(value) => {
+          setAccountNumberFrom(value);
+          setMessage(null);
+        }}
       />
       <CustomDropdown<string>
         label="To account"
@@ -38,7 +50,10 @@ const TransferPage = () => {
           label: `${account.accountNumber} — ${account.username} (€${account.balance})`,
         }))}
         value={accountNumberTo}
-        onChange={setAccountNumberTo}
+        onChange={(value) => {
+          setAccountNumberTo(value);
+          setMessage(null);
+        }}
       />
       <CustomInput
         type="number"
@@ -48,6 +63,7 @@ const TransferPage = () => {
         onChange={setAmount}
       />
       <CustomButton onClick={handleClick}>Transfer</CustomButton>
+      {message && <CustomBanner message={message} />}
     </section>
   );
 };

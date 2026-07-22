@@ -8,7 +8,7 @@ import type { BannerMessage } from "../../types/banner";
 import styles from "./TransferPage.module.css";
 
 const TransferPage = () => {
-  const { accounts } = useAccounts();
+  const { accounts, transfer } = useAccounts();
   const [accountNumberFrom, setAccountNumberFrom] = useState<string>("");
   const [accountNumberTo, setAccountNumberTo] = useState<string>("");
   const [amount, setAmount] = useState<string | number>("");
@@ -20,14 +20,16 @@ const TransferPage = () => {
         throw new Error("Please fill all fields.");
       }
 
-      if (accountNumberFrom === accountNumberTo) {
-        throw new Error("From and to account cannot be the same.");
-      }
+      transfer(accountNumberFrom, accountNumberTo, Number(amount));
 
       setMessage({
         variant: "success",
-        text: `Transferred ${amount} from ${accountNumberFrom} to ${accountNumberTo}.`,
+        text: `Transferred €${amount} from ${accountNumberFrom} to ${accountNumberTo}.`,
       });
+
+      setAccountNumberFrom("");
+      setAccountNumberTo("");
+      setAmount("");
     } catch (error) {
       setMessage({
         variant: "error",
@@ -70,7 +72,10 @@ const TransferPage = () => {
         label="Amount (EUR)"
         placeholder="0.00"
         value={amount}
-        onChange={setAmount}
+        onChange={(value) => {
+          setAmount(value);
+          setMessage(null);
+        }}
       />
       <CustomButton onClick={handleClick}>Transfer</CustomButton>
       {message && <CustomBanner message={message} />}

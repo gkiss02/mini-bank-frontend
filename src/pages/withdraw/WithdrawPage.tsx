@@ -4,15 +4,36 @@ import { useAccounts } from "../../hooks/useAccounts";
 import styles from "./WithdrawPage.module.css";
 import CustomInput from "../../components/custom-input/CustomInput";
 import CustomButton from "../../components/custom-button/CustomButton";
+import type { BannerMessage } from "../../types/banner";
+import CustomBanner from "../../components/custom-banner/CustomBanner";
 
 const WithdrawPage = () => {
-  const { accounts } = useAccounts();
+  const { accounts, withdraw } = useAccounts();
   const [accountNumber, setAccountNumber] = useState<string>("");
   const [amount, setAmount] = useState<string | number>("");
+  const [message, setMessage] = useState<BannerMessage | null>(null);
 
   const handleClick = () => {
-    console.log("accountNumber", accountNumber);
-    console.log("amount", amount);
+    try {
+      if (!accountNumber || !amount) {
+        throw new Error("Please fill all fields.");
+      }
+
+      withdraw(accountNumber, Number(amount));
+
+      setMessage({
+        variant: "success",
+        text: `Withdrew €${amount} from ${accountNumber}`,
+      });
+
+      setAccountNumber("");
+      setAmount("");
+    } catch (error) {
+      setMessage({
+        variant: "error",
+        text: error instanceof Error ? error.message : "Something went wrong.",
+      });
+    }
   };
 
   return (
@@ -26,16 +47,23 @@ const WithdrawPage = () => {
           label: `${account.accountNumber} — ${account.username} (€${account.balance})`,
         }))}
         value={accountNumber}
-        onChange={setAccountNumber}
+        onChange={(value) => {
+          setAccountNumber(value);
+          setMessage(null);
+        }}
       />
       <CustomInput
         type="number"
         label="Amount (EUR)"
         placeholder="0.00"
         value={amount}
-        onChange={setAmount}
+        onChange={(value) => {
+          setAmount(value);
+          setMessage(null);
+        }}
       />
       <CustomButton onClick={handleClick}>Withdraw</CustomButton>
+      {message && <CustomBanner message={message} />}
     </section>
   );
 };

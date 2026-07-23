@@ -1,10 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { BannerMessage } from "../types/banner";
+
+const SUCCESS_MESSAGE_DURATION_MS = 3000;
 
 export const useBankOperation = () => {
   const [message, setMessage] = useState<BannerMessage | null>(null);
 
   const clearMessage = () => setMessage(null);
+
+  useEffect(() => {
+    if (message?.variant !== "success") {
+      return;
+    }
+
+    const timeoutId = setTimeout(clearMessage, SUCCESS_MESSAGE_DURATION_MS);
+
+    return () => clearTimeout(timeoutId);
+  }, [message]);
 
   const run = (action: () => string) => {
     try {

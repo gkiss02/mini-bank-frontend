@@ -1,6 +1,18 @@
 table.accounts-table {
   border-collapse: collapse;
   font-size: 0.9rem;
+  width: 32rem;
+  table-layout: fixed;
+}
+
+table.accounts-table td.username {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+table.accounts-table td.account-number {
+  white-space: nowrap;
 }
 
 table.accounts-table thead tr {
@@ -14,6 +26,14 @@ table.accounts-table thead tr {
 
 table.accounts-table th {
   padding: 0.5rem 0.6rem;
+}
+
+table.accounts-table th:nth-child(1) {
+  width: 9rem;
+}
+
+table.accounts-table th:nth-child(2) {
+  width: 4rem;
 }
 
 table.accounts-table th.align-right,

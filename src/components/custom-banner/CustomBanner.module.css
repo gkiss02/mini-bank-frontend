@@ -1,8 +1,10 @@
 .error,
 .success {
+  box-sizing: border-box;
   padding: 0.5rem 0.75rem;
   border-radius: 4px;
   font-size: 0.85rem;
+  width: 32rem;
 }
 
 .error {

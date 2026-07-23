@@ -18,9 +18,13 @@ const AccountsTable = () => {
       <tbody>
         {accounts.map((account) => (
           <tr key={account.accountNumber}>
-            <td>{account.accountNumber}</td>
+            <td className={styles["account-number"]}>
+              {account.accountNumber}
+            </td>
             <td>{getAccountTypeLabel(account.accountType)}</td>
-            <td>{account.username}</td>
+            <td className={styles.username} title={account.username}>
+              {account.username}
+            </td>
             <td>€{account.balance}</td>
             <td>
               {account.accountType === AccountType.SAVINGS

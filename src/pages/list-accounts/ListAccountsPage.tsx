@@ -1,4 +1,4 @@
-import AccountsTable from "../accounts-table/AccountsTable";
+import AccountsTable from "../../components/accounts-table/AccountsTable";
 import styles from "./ListAccountsPage.module.css";
 
 const ListAccountsPage = () => {

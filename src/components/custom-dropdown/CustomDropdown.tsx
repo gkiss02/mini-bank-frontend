@@ -1,3 +1,4 @@
+import { useId } from "react";
 import styles from "./CustomDropdown.module.css";
 
 export interface CustomDropdownOption<T extends string> {
@@ -20,10 +21,13 @@ const CustomDropdown = <T extends string>({
   value,
   onChange,
 }: CustomDropdownProps<T>) => {
+  const id = useId();
+
   return (
     <div className={styles.container}>
-      <label>{label}</label>
+      <label htmlFor={id}>{label}</label>
       <select
+        id={id}
         className={styles.select}
         value={value}
         onChange={(event) => onChange(event.target.value as T)}

@@ -1,4 +1,5 @@
 import {
+  ACCOUNT_NUMBER_FORMAT,
   NORMAL_ACCOUNT_MIN_BALANCE,
   SAVINGS_ACCOUNT_MIN_BALANCE,
 } from "../constants/account";
@@ -53,4 +54,12 @@ export const isAccountExists = (
   }
 
   return account;
+};
+
+export const isValidAccountNumberFormat = (accountNumber: string): void => {
+  if (!ACCOUNT_NUMBER_FORMAT.test(accountNumber)) {
+    throw new Error(
+      `Account number ${accountNumber} is invalid. Expected format: xxx-xxxxxxx-xx.`
+    );
+  }
 };

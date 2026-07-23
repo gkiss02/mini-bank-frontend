@@ -11,12 +11,15 @@ import {
   findAccount,
   isAccountExists,
   isAmountGreaterThanZero,
+  isValidAccountNumberFormat,
 } from "../utils/accountRules";
 
 export const AccountsProvider = ({ children }: { children: ReactNode }) => {
   const [accounts, setAccounts] = useState<Account[]>([]);
 
   const createAccount = (input: CreateAccountInput) => {
+    isValidAccountNumberFormat(input.accountNumber);
+
     if (findAccount(accounts, input.accountNumber)) {
       throw new Error(`Account ${input.accountNumber} already exists.`);
     }

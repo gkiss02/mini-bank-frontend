@@ -4,35 +4,29 @@ import { useAccounts } from "../../hooks/useAccounts";
 import styles from "./WithdrawPage.module.css";
 import CustomInput from "../../components/custom-input/CustomInput";
 import CustomButton from "../../components/custom-button/CustomButton";
-import type { BannerMessage } from "../../types/banner";
 import CustomBanner from "../../components/custom-banner/CustomBanner";
+import { useBankOperation } from "../../hooks/useBankOperation";
 
 const WithdrawPage = () => {
   const { accounts, withdraw } = useAccounts();
   const [accountNumber, setAccountNumber] = useState<string>("");
   const [amount, setAmount] = useState<string | number>("");
-  const [message, setMessage] = useState<BannerMessage | null>(null);
+  const { message, run, clearMessage } = useBankOperation();
 
   const handleClick = () => {
-    try {
+    const success = run(() => {
       if (!accountNumber || !amount) {
         throw new Error("Please fill all fields.");
       }
 
       withdraw(accountNumber, Number(amount));
 
-      setMessage({
-        variant: "success",
-        text: `Withdrew €${amount} from ${accountNumber}`,
-      });
+      return `Withdrew €${amount} from ${accountNumber}`;
+    });
 
+    if (success) {
       setAccountNumber("");
       setAmount("");
-    } catch (error) {
-      setMessage({
-        variant: "error",
-        text: error instanceof Error ? error.message : "Something went wrong.",
-      });
     }
   };
 
@@ -49,7 +43,7 @@ const WithdrawPage = () => {
         value={accountNumber}
         onChange={(value) => {
           setAccountNumber(value);
-          setMessage(null);
+          clearMessage();
         }}
       />
       <CustomInput
@@ -59,7 +53,7 @@ const WithdrawPage = () => {
         value={amount}
         onChange={(value) => {
           setAmount(value);
-          setMessage(null);
+          clearMessage();
         }}
       />
       <CustomButton onClick={handleClick}>Withdraw</CustomButton>

@@ -4,37 +4,31 @@ import CustomButton from "../../components/custom-button/CustomButton";
 import CustomDropdown from "../../components/custom-dropdown/CustomDropdown";
 import CustomInput from "../../components/custom-input/CustomInput";
 import { useAccounts } from "../../hooks/useAccounts";
-import type { BannerMessage } from "../../types/banner";
 import styles from "./TransferPage.module.css";
+import { useBankOperation } from "../../hooks/useBankOperation";
 
 const TransferPage = () => {
   const { accounts, transfer } = useAccounts();
   const [accountNumberFrom, setAccountNumberFrom] = useState<string>("");
   const [accountNumberTo, setAccountNumberTo] = useState<string>("");
   const [amount, setAmount] = useState<string | number>("");
-  const [message, setMessage] = useState<BannerMessage | null>(null);
+  const { message, run, clearMessage } = useBankOperation();
 
   const handleClick = () => {
-    try {
+    const success = run(() => {
       if (!accountNumberFrom || !accountNumberTo || !amount) {
         throw new Error("Please fill all fields.");
       }
 
       transfer(accountNumberFrom, accountNumberTo, Number(amount));
 
-      setMessage({
-        variant: "success",
-        text: `Transferred €${amount} from ${accountNumberFrom} to ${accountNumberTo}.`,
-      });
+      return `Transferred €${amount} from ${accountNumberFrom} to ${accountNumberTo}.`;
+    });
 
+    if (success) {
       setAccountNumberFrom("");
       setAccountNumberTo("");
       setAmount("");
-    } catch (error) {
-      setMessage({
-        variant: "error",
-        text: error instanceof Error ? error.message : "Something went wrong.",
-      });
     }
   };
 
@@ -51,7 +45,7 @@ const TransferPage = () => {
         value={accountNumberFrom}
         onChange={(value) => {
           setAccountNumberFrom(value);
-          setMessage(null);
+          clearMessage();
         }}
       />
       <CustomDropdown<string>
@@ -64,7 +58,7 @@ const TransferPage = () => {
         value={accountNumberTo}
         onChange={(value) => {
           setAccountNumberTo(value);
-          setMessage(null);
+          clearMessage();
         }}
       />
       <CustomInput
@@ -74,7 +68,7 @@ const TransferPage = () => {
         value={amount}
         onChange={(value) => {
           setAmount(value);
-          setMessage(null);
+          clearMessage();
         }}
       />
       <CustomButton onClick={handleClick}>Transfer</CustomButton>

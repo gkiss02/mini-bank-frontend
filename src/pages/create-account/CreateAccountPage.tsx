@@ -4,10 +4,10 @@ import { NORMAL_ACCOUNT_WELCOME_BONUS } from "../../constants/account";
 import { AccountType, getAccountTypeLabel } from "../../types/account";
 import CustomInput from "../../components/custom-input/CustomInput";
 import { useAccounts } from "../../hooks/useAccounts";
-import type { BannerMessage } from "../../types/banner";
 import styles from "./CreateAccountPage.module.css";
 import CustomDropdown from "../../components/custom-dropdown/CustomDropdown";
 import CustomBanner from "../../components/custom-banner/CustomBanner";
+import { useBankOperation } from "../../hooks/useBankOperation";
 
 const CreateAccountPage = () => {
   const { createAccount } = useAccounts();
@@ -17,10 +17,10 @@ const CreateAccountPage = () => {
   const [accountNumber, setAccountNumber] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [interestRate, setInterestRate] = useState<string | number>("");
-  const [message, setMessage] = useState<BannerMessage | null>(null);
+  const { message, run, clearMessage } = useBankOperation();
 
   const handleClick = () => {
-    try {
+    const success = run(() => {
       if (
         !accountNumber ||
         !username ||
@@ -46,23 +46,17 @@ const CreateAccountPage = () => {
         });
       }
 
-      setMessage({
-        variant: "success",
-        text: isSavings
-          ? `Savings account ${accountNumber} created for ${username}`
-          : `Account ${accountNumber} created for ${username} with a €${NORMAL_ACCOUNT_WELCOME_BONUS.toFixed(
-              2
-            )} welcome bonus.`,
-      });
+      return isSavings
+        ? `Savings account ${accountNumber} created for ${username}`
+        : `Account ${accountNumber} created for ${username} with a €${NORMAL_ACCOUNT_WELCOME_BONUS.toFixed(
+            2
+          )} welcome bonus.`;
+    });
 
+    if (success) {
       setAccountNumber("");
       setUsername("");
       setInterestRate("");
-    } catch (error) {
-      setMessage({
-        variant: "error",
-        text: error instanceof Error ? error.message : "Something went wrong.",
-      });
     }
   };
 
@@ -78,7 +72,7 @@ const CreateAccountPage = () => {
         value={accountType}
         onChange={(value) => {
           setAccountType(value);
-          setMessage(null);
+          clearMessage();
         }}
       />
       <CustomInput
@@ -88,7 +82,7 @@ const CreateAccountPage = () => {
         value={accountNumber}
         onChange={(value) => {
           setAccountNumber(String(value));
-          setMessage(null);
+          clearMessage();
         }}
       />
       <CustomInput
@@ -98,7 +92,7 @@ const CreateAccountPage = () => {
         value={username}
         onChange={(value) => {
           setUsername(String(value));
-          setMessage(null);
+          clearMessage();
         }}
       />
       {accountType === AccountType.SAVINGS && (
@@ -109,7 +103,7 @@ const CreateAccountPage = () => {
           value={interestRate}
           onChange={(value) => {
             setInterestRate(value);
-            setMessage(null);
+            clearMessage();
           }}
         />
       )}

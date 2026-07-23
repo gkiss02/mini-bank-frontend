@@ -61,60 +61,69 @@ const CreateAccountPage = () => {
   };
 
   return (
-    <section className={styles.container}>
+    <section>
       <h2>Create account page</h2>
-      <CustomDropdown<AccountType>
-        label="Account type"
-        options={Object.values(AccountType).map((type) => ({
-          value: type,
-          label: getAccountTypeLabel(type),
-        }))}
-        value={accountType}
-        onChange={(value) => {
-          setAccountType(value);
-          clearMessage();
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          handleClick();
         }}
-      />
-      <CustomInput
-        type="text"
-        label="Account number"
-        placeholder="e.g 555-1111111-58"
-        value={accountNumber}
-        onChange={(value) => {
-          setAccountNumber(String(value));
-          clearMessage();
-        }}
-      />
-      <CustomInput
-        type="text"
-        label="User name"
-        placeholder="e.g Mr. Big Buck"
-        value={username}
-        onChange={(value) => {
-          setUsername(String(value));
-          clearMessage();
-        }}
-      />
-      {accountType === AccountType.SAVINGS && (
-        <CustomInput
-          type="number"
-          label="Interest rate (%)"
-          placeholder="e.g 2.5%"
-          value={interestRate}
+      >
+        <CustomDropdown<AccountType>
+          label="Account type"
+          options={Object.values(AccountType).map((type) => ({
+            value: type,
+            label: getAccountTypeLabel(type),
+          }))}
+          value={accountType}
           onChange={(value) => {
-            setInterestRate(value);
+            setAccountType(value);
             clearMessage();
           }}
         />
-      )}
-      <p className={styles.hint}>
-        {accountType === AccountType.NORMAL
-          ? `Normal accounts get a €${NORMAL_ACCOUNT_WELCOME_BONUS.toFixed(
-              2
-            )} welcome bonus and can overdraw to €-500.00.`
-          : "Savings accounts cannot go below €0.00."}
-      </p>
-      <CustomButton onClick={handleClick}>Create account</CustomButton>
+        <CustomInput
+          type="text"
+          label="Account number"
+          placeholder="e.g 555-1111111-58"
+          value={accountNumber}
+          onChange={(value) => {
+            setAccountNumber(String(value));
+            clearMessage();
+          }}
+        />
+        <CustomInput
+          type="text"
+          label="User name"
+          placeholder="e.g Mr. Big Buck"
+          value={username}
+          onChange={(value) => {
+            setUsername(String(value));
+            clearMessage();
+          }}
+        />
+        {accountType === AccountType.SAVINGS && (
+          <CustomInput
+            type="number"
+            label="Interest rate (%)"
+            placeholder="e.g 2.5%"
+            value={interestRate}
+            onChange={(value) => {
+              setInterestRate(value);
+              clearMessage();
+            }}
+          />
+        )}
+        <p className={styles.hint}>
+          {accountType === AccountType.NORMAL
+            ? `Normal accounts get a €${NORMAL_ACCOUNT_WELCOME_BONUS.toFixed(
+                2
+              )} welcome bonus and can overdraw to €-500.00.`
+            : "Savings accounts cannot go below €0.00."}
+        </p>
+        <CustomButton type={"submit"} onClick={handleClick}>
+          Create account
+        </CustomButton>
+      </form>
       {message && <CustomBanner message={message} />}
     </section>
   );

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import CustomDropdown from "../../components/custom-dropdown/CustomDropdown";
 import { useAccounts } from "../../hooks/useAccounts";
-import styles from "./WithdrawPage.module.css";
 import CustomInput from "../../components/custom-input/CustomInput";
 import CustomButton from "../../components/custom-button/CustomButton";
 import CustomBanner from "../../components/custom-banner/CustomBanner";
@@ -31,32 +30,41 @@ const WithdrawPage = () => {
   };
 
   return (
-    <section className={styles.container}>
+    <section>
       <h2>Withdraw</h2>
-      <CustomDropdown<string>
-        label="Account"
-        placeholder="Select account..."
-        options={accounts.map((account) => ({
-          value: account.accountNumber,
-          label: `${account.accountNumber} — ${account.username} (€${account.balance})`,
-        }))}
-        value={accountNumber}
-        onChange={(value) => {
-          setAccountNumber(value);
-          clearMessage();
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          handleClick();
         }}
-      />
-      <CustomInput
-        type="number"
-        label="Amount (EUR)"
-        placeholder="0.00"
-        value={amount}
-        onChange={(value) => {
-          setAmount(value);
-          clearMessage();
-        }}
-      />
-      <CustomButton onClick={handleClick}>Withdraw</CustomButton>
+      >
+        <CustomDropdown<string>
+          label="Account"
+          placeholder="Select account..."
+          options={accounts.map((account) => ({
+            value: account.accountNumber,
+            label: `${account.accountNumber} — ${account.username} (€${account.balance})`,
+          }))}
+          value={accountNumber}
+          onChange={(value) => {
+            setAccountNumber(value);
+            clearMessage();
+          }}
+        />
+        <CustomInput
+          type="number"
+          label="Amount (EUR)"
+          placeholder="0.00"
+          value={amount}
+          onChange={(value) => {
+            setAmount(value);
+            clearMessage();
+          }}
+        />
+        <CustomButton type="submit" onClick={handleClick}>
+          Withdraw
+        </CustomButton>
+      </form>
       {message && <CustomBanner message={message} />}
     </section>
   );

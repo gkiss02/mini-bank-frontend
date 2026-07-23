@@ -4,7 +4,6 @@ import CustomButton from "../../components/custom-button/CustomButton";
 import CustomDropdown from "../../components/custom-dropdown/CustomDropdown";
 import CustomInput from "../../components/custom-input/CustomInput";
 import { useAccounts } from "../../hooks/useAccounts";
-import styles from "./TransferPage.module.css";
 import { useBankOperation } from "../../hooks/useBankOperation";
 
 const TransferPage = () => {
@@ -33,45 +32,54 @@ const TransferPage = () => {
   };
 
   return (
-    <section className={styles.container}>
+    <section>
       <h2>Transfer</h2>
-      <CustomDropdown<string>
-        label="From account"
-        placeholder="Select account..."
-        options={accounts.map((account) => ({
-          value: account.accountNumber,
-          label: `${account.accountNumber} — ${account.username} (€${account.balance})`,
-        }))}
-        value={accountNumberFrom}
-        onChange={(value) => {
-          setAccountNumberFrom(value);
-          clearMessage();
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          handleClick();
         }}
-      />
-      <CustomDropdown<string>
-        label="To account"
-        placeholder="Select account..."
-        options={accounts.map((account) => ({
-          value: account.accountNumber,
-          label: `${account.accountNumber} — ${account.username} (€${account.balance})`,
-        }))}
-        value={accountNumberTo}
-        onChange={(value) => {
-          setAccountNumberTo(value);
-          clearMessage();
-        }}
-      />
-      <CustomInput
-        type="number"
-        label="Amount (EUR)"
-        placeholder="0.00"
-        value={amount}
-        onChange={(value) => {
-          setAmount(value);
-          clearMessage();
-        }}
-      />
-      <CustomButton onClick={handleClick}>Transfer</CustomButton>
+      >
+        <CustomDropdown<string>
+          label="From account"
+          placeholder="Select account..."
+          options={accounts.map((account) => ({
+            value: account.accountNumber,
+            label: `${account.accountNumber} — ${account.username} (€${account.balance})`,
+          }))}
+          value={accountNumberFrom}
+          onChange={(value) => {
+            setAccountNumberFrom(value);
+            clearMessage();
+          }}
+        />
+        <CustomDropdown<string>
+          label="To account"
+          placeholder="Select account..."
+          options={accounts.map((account) => ({
+            value: account.accountNumber,
+            label: `${account.accountNumber} — ${account.username} (€${account.balance})`,
+          }))}
+          value={accountNumberTo}
+          onChange={(value) => {
+            setAccountNumberTo(value);
+            clearMessage();
+          }}
+        />
+        <CustomInput
+          type="number"
+          label="Amount (EUR)"
+          placeholder="0.00"
+          value={amount}
+          onChange={(value) => {
+            setAmount(value);
+            clearMessage();
+          }}
+        />
+        <CustomButton type="submit" onClick={handleClick}>
+          Transfer
+        </CustomButton>
+      </form>
       {message && <CustomBanner message={message} />}
     </section>
   );

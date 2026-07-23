@@ -3,7 +3,6 @@ import CustomButton from "../../components/custom-button/CustomButton";
 import CustomDropdown from "../../components/custom-dropdown/CustomDropdown";
 import CustomInput from "../../components/custom-input/CustomInput";
 import { useAccounts } from "../../hooks/useAccounts";
-import styles from "./DepositPage.module.css";
 import CustomBanner from "../../components/custom-banner/CustomBanner";
 import { useBankOperation } from "../../hooks/useBankOperation";
 
@@ -31,32 +30,41 @@ const DepositPage = () => {
   };
 
   return (
-    <section className={styles.container}>
+    <section>
       <h2>Deposit</h2>
-      <CustomDropdown<string>
-        label="Account"
-        placeholder="Select account..."
-        options={accounts.map((account) => ({
-          value: account.accountNumber,
-          label: `${account.accountNumber} — ${account.username} (€${account.balance})`,
-        }))}
-        value={accountNumber}
-        onChange={(value) => {
-          setAccountNumber(value);
-          clearMessage();
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          handleClick();
         }}
-      />
-      <CustomInput
-        type="number"
-        label="Amount (EUR)"
-        placeholder="0.00"
-        value={amount}
-        onChange={(value) => {
-          setAmount(value);
-          clearMessage();
-        }}
-      />
-      <CustomButton onClick={handleClick}>Deposit</CustomButton>
+      >
+        <CustomDropdown<string>
+          label="Account"
+          placeholder="Select account..."
+          options={accounts.map((account) => ({
+            value: account.accountNumber,
+            label: `${account.accountNumber} — ${account.username} (€${account.balance})`,
+          }))}
+          value={accountNumber}
+          onChange={(value) => {
+            setAccountNumber(value);
+            clearMessage();
+          }}
+        />
+        <CustomInput
+          type="number"
+          label="Amount (EUR)"
+          placeholder="0.00"
+          value={amount}
+          onChange={(value) => {
+            setAmount(value);
+            clearMessage();
+          }}
+        />
+        <CustomButton type="submit" onClick={handleClick}>
+          Deposit
+        </CustomButton>
+      </form>
       {message && <CustomBanner message={message} />}
     </section>
   );

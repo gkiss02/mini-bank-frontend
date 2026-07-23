@@ -4,6 +4,7 @@ import {
   SAVINGS_ACCOUNT_MIN_BALANCE_CENT,
 } from "../constants/account";
 import { AccountType, type Account } from "../types/account";
+import { formatMoney } from "./money";
 
 export const getMinimumBalance = (accountType: AccountType): number => {
   switch (accountType) {
@@ -23,10 +24,12 @@ export const assertSufficientBalance = (
   if (newBalance < minimumBalance) {
     throw new Error(
       account.accountType === AccountType.SAVINGS
-        ? `Insufficient balance: savings account ${account.accountNumber} cannot go below €0.00.`
+        ? `Insufficient balance: savings account ${
+            account.accountNumber
+          } cannot overdraw past €${formatMoney(minimumBalance)}.`
         : `Insufficient balance: normal account ${
             account.accountNumber
-          } cannot overdraw past €${minimumBalance.toFixed(2)}.`
+          } cannot overdraw past €${formatMoney(minimumBalance)}.`
     );
   }
 };

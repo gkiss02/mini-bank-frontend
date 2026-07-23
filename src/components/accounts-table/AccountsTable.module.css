@@ -1,7 +1,7 @@
 table.accounts-table {
   border-collapse: collapse;
   font-size: 0.9rem;
-  width: 32rem;
+  width: var(--content-width);
   table-layout: fixed;
 }
 
@@ -36,20 +36,7 @@ table.accounts-table th:nth-child(2) {
   width: 4rem;
 }
 
-table.accounts-table th.align-right,
-table.accounts-table td.align-right {
-  text-align: right;
-}
-
 table.accounts-table td {
   padding: 0.5rem 0.6rem;
   border-bottom: 1px solid var(--border-soft);
-}
-
-table.accounts-table td.numeric {
-  font-variant-numeric: tabular-nums;
-}
-
-table.accounts-table td.rate {
-  color: var(--text-muted);
 }

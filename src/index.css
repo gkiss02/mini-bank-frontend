@@ -21,6 +21,8 @@
   --success-text: #1f6b34;
   --error-bg: #f8dcd6;
   --error-text: #a33a28;
+
+  --content-width: 32rem;
 }
 
 body,

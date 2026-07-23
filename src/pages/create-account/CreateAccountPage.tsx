@@ -92,7 +92,7 @@ const CreateAccountPage = () => {
           placeholder="e.g 555-1111111-58"
           value={accountNumber}
           onChange={(value) => {
-            setAccountNumber(String(value));
+            setAccountNumber(value);
             clearMessage();
           }}
         />
@@ -102,7 +102,7 @@ const CreateAccountPage = () => {
           placeholder="e.g Mr. Big Buck"
           value={username}
           onChange={(value) => {
-            setUsername(String(value));
+            setUsername(value);
             clearMessage();
           }}
         />

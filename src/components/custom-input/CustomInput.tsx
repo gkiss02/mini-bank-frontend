@@ -2,17 +2,17 @@ import { useId, type ChangeEvent } from "react";
 import styles from "./CustomInput.module.css";
 
 interface CustomInputProps {
-  type: "text" | "number";
+  variant: "text" | "decimal";
   label: string;
   placeholder: string;
-  value: string | number;
-  onChange: (value: string | number) => void;
+  value: string;
+  onChange: (value: string) => void;
 }
 
-const MAX_DECIMAL_PLACES = /^\d*\.?\d{0,2}$/;
+const DECIMAL_PATTERN = /^(\d+\.?\d{0,2})?$/;
 
 const CustomInput = ({
-  type,
+  variant,
   label,
   placeholder,
   value,
@@ -23,7 +23,7 @@ const CustomInput = ({
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
 
-    if (type === "number" && !MAX_DECIMAL_PLACES.test(newValue)) {
+    if (variant === "decimal" && !DECIMAL_PATTERN.test(newValue)) {
       return;
     }
 
@@ -35,7 +35,8 @@ const CustomInput = ({
       <label htmlFor={id}>{label}</label>
       <input
         id={id}
-        type={type}
+        type="text"
+        inputMode={variant === "decimal" ? "decimal" : undefined}
         placeholder={placeholder}
         value={value}
         onChange={handleChange}

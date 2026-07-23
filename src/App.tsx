@@ -8,22 +8,22 @@ import WithdrawPage from "./pages/withdraw/WithdrawPage";
 import ErrorPage from "./pages/error/ErrorPage";
 import { AccountsProvider } from "./context/AccountsContext";
 
-const App = () => {
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <RootLayout />,
-      errorElement: <ErrorPage />,
-      children: [
-        { index: true, element: <CreateAccountPage /> },
-        { path: "list-accounts", element: <ListAccountsPage /> },
-        { path: "deposit", element: <DepositPage /> },
-        { path: "transfer", element: <TransferPage /> },
-        { path: "withdraw", element: <WithdrawPage /> },
-      ],
-    },
-  ]);
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <RootLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      { index: true, element: <CreateAccountPage /> },
+      { path: "list-accounts", element: <ListAccountsPage /> },
+      { path: "deposit", element: <DepositPage /> },
+      { path: "transfer", element: <TransferPage /> },
+      { path: "withdraw", element: <WithdrawPage /> },
+    ],
+  },
+]);
 
+const App = () => {
   return (
     <AccountsProvider>
       <RouterProvider router={router} />

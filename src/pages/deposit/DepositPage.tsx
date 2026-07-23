@@ -10,7 +10,7 @@ import { getAccountOptionLabel } from "../../utils/account";
 const DepositPage = () => {
   const { accounts, deposit } = useAccounts();
   const [accountNumber, setAccountNumber] = useState<string>("");
-  const [amount, setAmount] = useState<string | number>("");
+  const [amount, setAmount] = useState<string>("");
   const { message, run, clearMessage } = useBankOperation();
 
   const handleClick = () => {
@@ -53,7 +53,7 @@ const DepositPage = () => {
           }}
         />
         <CustomInput
-          type="number"
+          variant="decimal"
           label="Amount (EUR)"
           placeholder="0.00"
           value={amount}

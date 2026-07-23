@@ -43,8 +43,9 @@ export const isAmountGreaterThanZero = (amount: number): void => {
 export const findAccount = (
   accounts: Account[],
   accountNumber: string
-): Account | undefined =>
-  accounts.find((account) => account.accountNumber === accountNumber);
+): Account | undefined => {
+  return accounts.find((account) => account.accountNumber === accountNumber);
+};
 
 export const isAccountExists = (
   accounts: Account[],

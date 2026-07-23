@@ -21,7 +21,7 @@ const CreateAccountPage = () => {
   );
   const [accountNumber, setAccountNumber] = useState<string>("");
   const [username, setUsername] = useState<string>("");
-  const [interestRate, setInterestRate] = useState<string | number>("");
+  const [interestRate, setInterestRate] = useState<string>("");
   const { message, run, clearMessage } = useBankOperation();
 
   const handleClick = () => {
@@ -87,7 +87,7 @@ const CreateAccountPage = () => {
           }}
         />
         <CustomInput
-          type="text"
+          variant="text"
           label="Account number"
           placeholder="e.g 555-1111111-58"
           value={accountNumber}
@@ -97,7 +97,7 @@ const CreateAccountPage = () => {
           }}
         />
         <CustomInput
-          type="text"
+          variant="text"
           label="User name"
           placeholder="e.g Mr. Big Buck"
           value={username}
@@ -108,7 +108,7 @@ const CreateAccountPage = () => {
         />
         {accountType === AccountType.SAVINGS && (
           <CustomInput
-            type="number"
+            variant="decimal"
             label="Interest rate (%)"
             placeholder="e.g 2.5%"
             value={interestRate}

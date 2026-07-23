@@ -11,7 +11,7 @@ const TransferPage = () => {
   const { accounts, transfer } = useAccounts();
   const [accountNumberFrom, setAccountNumberFrom] = useState<string>("");
   const [accountNumberTo, setAccountNumberTo] = useState<string>("");
-  const [amount, setAmount] = useState<string | number>("");
+  const [amount, setAmount] = useState<string>("");
   const { message, run, clearMessage } = useBankOperation();
 
   const handleClick = () => {
@@ -70,7 +70,7 @@ const TransferPage = () => {
           }}
         />
         <CustomInput
-          type="number"
+          variant="decimal"
           label="Amount (EUR)"
           placeholder="0.00"
           value={amount}

@@ -76,9 +76,7 @@ const TransferPage = () => {
             clearMessage();
           }}
         />
-        <CustomButton type="submit" onClick={handleClick}>
-          Transfer
-        </CustomButton>
+        <CustomButton type="submit">Transfer</CustomButton>
       </form>
       {message && <CustomBanner message={message} />}
     </section>

@@ -3,7 +3,7 @@ import styles from "./CustomButton.module.css";
 
 interface CustomButtonProps {
   children: ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
   type?: "button" | "submit";
 }
 

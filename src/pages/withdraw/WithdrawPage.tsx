@@ -61,9 +61,7 @@ const WithdrawPage = () => {
             clearMessage();
           }}
         />
-        <CustomButton type="submit" onClick={handleClick}>
-          Withdraw
-        </CustomButton>
+        <CustomButton type="submit">Withdraw</CustomButton>
       </form>
       {message && <CustomBanner message={message} />}
     </section>

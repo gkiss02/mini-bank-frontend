@@ -120,9 +120,7 @@ const CreateAccountPage = () => {
               )} welcome bonus and can overdraw to €-500.00.`
             : "Savings accounts cannot go below €0.00."}
         </p>
-        <CustomButton type={"submit"} onClick={handleClick}>
-          Create account
-        </CustomButton>
+        <CustomButton type="submit">Create account</CustomButton>
       </form>
       {message && <CustomBanner message={message} />}
     </section>

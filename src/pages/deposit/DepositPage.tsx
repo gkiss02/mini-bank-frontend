@@ -61,9 +61,7 @@ const DepositPage = () => {
             clearMessage();
           }}
         />
-        <CustomButton type="submit" onClick={handleClick}>
-          Deposit
-        </CustomButton>
+        <CustomButton type="submit">Deposit</CustomButton>
       </form>
       {message && <CustomBanner message={message} />}
     </section>

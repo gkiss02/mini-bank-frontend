@@ -5,6 +5,7 @@ import CustomInput from "../../components/custom-input/CustomInput";
 import CustomButton from "../../components/custom-button/CustomButton";
 import CustomBanner from "../../components/custom-banner/CustomBanner";
 import { useBankOperation } from "../../hooks/useBankOperation";
+import { getAccountOptionLabel } from "../../utils/account";
 
 const WithdrawPage = () => {
   const { accounts, withdraw } = useAccounts();
@@ -20,7 +21,7 @@ const WithdrawPage = () => {
 
       withdraw(accountNumber, Number(amount));
 
-      return `Withdrew €${amount} from ${accountNumber}`;
+      return `Withdrew €${Number(amount).toFixed(2)} from ${accountNumber}`;
     });
 
     if (success) {
@@ -43,7 +44,7 @@ const WithdrawPage = () => {
           placeholder="Select account..."
           options={accounts.map((account) => ({
             value: account.accountNumber,
-            label: `${account.accountNumber} — ${account.username} (€${account.balance})`,
+            label: getAccountOptionLabel(account),
           }))}
           value={accountNumber}
           onChange={(value) => {

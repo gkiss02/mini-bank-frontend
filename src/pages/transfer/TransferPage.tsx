@@ -5,6 +5,7 @@ import CustomDropdown from "../../components/custom-dropdown/CustomDropdown";
 import CustomInput from "../../components/custom-input/CustomInput";
 import { useAccounts } from "../../hooks/useAccounts";
 import { useBankOperation } from "../../hooks/useBankOperation";
+import { getAccountOptionLabel } from "../../utils/account";
 
 const TransferPage = () => {
   const { accounts, transfer } = useAccounts();
@@ -21,7 +22,9 @@ const TransferPage = () => {
 
       transfer(accountNumberFrom, accountNumberTo, Number(amount));
 
-      return `Transferred €${amount} from ${accountNumberFrom} to ${accountNumberTo}.`;
+      return `Transferred €${Number(amount).toFixed(
+        2
+      )} from ${accountNumberFrom} to ${accountNumberTo}.`;
     });
 
     if (success) {
@@ -45,7 +48,7 @@ const TransferPage = () => {
           placeholder="Select account..."
           options={accounts.map((account) => ({
             value: account.accountNumber,
-            label: `${account.accountNumber} — ${account.username} (€${account.balance})`,
+            label: getAccountOptionLabel(account),
           }))}
           value={accountNumberFrom}
           onChange={(value) => {
@@ -58,7 +61,7 @@ const TransferPage = () => {
           placeholder="Select account..."
           options={accounts.map((account) => ({
             value: account.accountNumber,
-            label: `${account.accountNumber} — ${account.username} (€${account.balance})`,
+            label: getAccountOptionLabel(account),
           }))}
           value={accountNumberTo}
           onChange={(value) => {

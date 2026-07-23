@@ -5,6 +5,7 @@ import CustomInput from "../../components/custom-input/CustomInput";
 import { useAccounts } from "../../hooks/useAccounts";
 import CustomBanner from "../../components/custom-banner/CustomBanner";
 import { useBankOperation } from "../../hooks/useBankOperation";
+import { getAccountOptionLabel } from "../../utils/account";
 
 const DepositPage = () => {
   const { accounts, deposit } = useAccounts();
@@ -20,7 +21,7 @@ const DepositPage = () => {
 
       deposit(accountNumber, Number(amount));
 
-      return `Deposited €${amount} into ${accountNumber}`;
+      return `Deposited €${Number(amount).toFixed(2)} into ${accountNumber}`;
     });
 
     if (success) {
@@ -43,7 +44,7 @@ const DepositPage = () => {
           placeholder="Select account..."
           options={accounts.map((account) => ({
             value: account.accountNumber,
-            label: `${account.accountNumber} — ${account.username} (€${account.balance})`,
+            label: getAccountOptionLabel(account),
           }))}
           value={accountNumber}
           onChange={(value) => {

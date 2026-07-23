@@ -1,6 +1,10 @@
 import { useState } from "react";
 import CustomButton from "../../components/custom-button/CustomButton";
-import { NORMAL_ACCOUNT_WELCOME_BONUS } from "../../constants/account";
+import {
+  NORMAL_ACCOUNT_MIN_BALANCE_CENT,
+  NORMAL_ACCOUNT_WELCOME_BONUS_CENT,
+  SAVINGS_ACCOUNT_MIN_BALANCE_CENT,
+} from "../../constants/account";
 import { AccountType, getAccountTypeLabel } from "../../types/account";
 import CustomInput from "../../components/custom-input/CustomInput";
 import { useAccounts } from "../../hooks/useAccounts";
@@ -8,6 +12,7 @@ import styles from "./CreateAccountPage.module.css";
 import CustomDropdown from "../../components/custom-dropdown/CustomDropdown";
 import CustomBanner from "../../components/custom-banner/CustomBanner";
 import { useBankOperation } from "../../hooks/useBankOperation";
+import { formatMoney } from "../../utils/money";
 
 const CreateAccountPage = () => {
   const { createAccount } = useAccounts();
@@ -48,8 +53,8 @@ const CreateAccountPage = () => {
 
       return isSavings
         ? `Savings account ${accountNumber} created for ${username}`
-        : `Account ${accountNumber} created for ${username} with a €${NORMAL_ACCOUNT_WELCOME_BONUS.toFixed(
-            2
+        : `Account ${accountNumber} created for ${username} with a €${formatMoney(
+            NORMAL_ACCOUNT_WELCOME_BONUS_CENT
           )} welcome bonus.`;
     });
 
@@ -115,10 +120,14 @@ const CreateAccountPage = () => {
         )}
         <p className={styles.hint}>
           {accountType === AccountType.NORMAL
-            ? `Normal accounts get a €${NORMAL_ACCOUNT_WELCOME_BONUS.toFixed(
-                2
-              )} welcome bonus and can overdraw to €-500.00.`
-            : "Savings accounts cannot go below €0.00."}
+            ? `Normal accounts get a €${formatMoney(
+                NORMAL_ACCOUNT_WELCOME_BONUS_CENT
+              )} welcome bonus and can overdraw to €${formatMoney(
+                NORMAL_ACCOUNT_MIN_BALANCE_CENT
+              )}.`
+            : `Savings accounts cannot go below €${formatMoney(
+                SAVINGS_ACCOUNT_MIN_BALANCE_CENT
+              )}.`}
         </p>
         <CustomButton type="submit">Create account</CustomButton>
       </form>

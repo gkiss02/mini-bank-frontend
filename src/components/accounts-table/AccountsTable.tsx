@@ -1,5 +1,6 @@
 import { useAccounts } from "../../hooks/useAccounts";
 import { AccountType, getAccountTypeLabel } from "../../types/account";
+import { formatMoney } from "../../utils/money";
 import styles from "./AccountsTable.module.css";
 
 const AccountsTable = () => {
@@ -25,7 +26,7 @@ const AccountsTable = () => {
             <td className={styles.username} title={account.username}>
               {account.username}
             </td>
-            <td>€{account.balance}</td>
+            <td>€{formatMoney(account.balance)}</td>
             <td>
               {account.accountType === AccountType.SAVINGS
                 ? `${account.interestRate}%`

@@ -1,16 +1,16 @@
 import {
   ACCOUNT_NUMBER_FORMAT,
-  NORMAL_ACCOUNT_MIN_BALANCE,
-  SAVINGS_ACCOUNT_MIN_BALANCE,
+  NORMAL_ACCOUNT_MIN_BALANCE_CENT,
+  SAVINGS_ACCOUNT_MIN_BALANCE_CENT,
 } from "../constants/account";
 import { AccountType, type Account } from "../types/account";
 
 export const getMinimumBalance = (accountType: AccountType): number => {
   switch (accountType) {
     case AccountType.NORMAL:
-      return NORMAL_ACCOUNT_MIN_BALANCE;
+      return NORMAL_ACCOUNT_MIN_BALANCE_CENT;
     case AccountType.SAVINGS:
-      return SAVINGS_ACCOUNT_MIN_BALANCE;
+      return SAVINGS_ACCOUNT_MIN_BALANCE_CENT;
   }
 };
 

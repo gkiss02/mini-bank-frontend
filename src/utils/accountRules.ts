@@ -23,7 +23,34 @@ export const assertSufficientBalance = (
     throw new Error(
       account.accountType === AccountType.SAVINGS
         ? `Insufficient balance: savings account ${account.accountNumber} cannot go below €0.00.`
-        : `Insufficient balance: normal account ${account.accountNumber} cannot overdraw past €${minimumBalance.toFixed(2)}.`
+        : `Insufficient balance: normal account ${
+            account.accountNumber
+          } cannot overdraw past €${minimumBalance.toFixed(2)}.`
     );
   }
+};
+
+export const isAmountGreaterThanZero = (amount: number): void => {
+  if (amount <= 0) {
+    throw new Error("Enter an amount greater than 0.");
+  }
+};
+
+export const findAccount = (
+  accounts: Account[],
+  accountNumber: string
+): Account | undefined =>
+  accounts.find((account) => account.accountNumber === accountNumber);
+
+export const isAccountExists = (
+  accounts: Account[],
+  accountNumber: string
+): Account => {
+  const account = findAccount(accounts, accountNumber);
+
+  if (!account) {
+    throw new Error(`Account ${accountNumber} not found.`);
+  }
+
+  return account;
 };

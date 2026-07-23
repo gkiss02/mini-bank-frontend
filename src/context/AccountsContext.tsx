@@ -6,15 +6,18 @@ import {
   type CreateAccountInput,
 } from "../types/account";
 import { AccountsContext } from "./accounts-context";
-import { assertSufficientBalance } from "../utils/accountRules";
+import {
+  assertSufficientBalance,
+  findAccount,
+  isAccountExists,
+  isAmountGreaterThanZero,
+} from "../utils/accountRules";
 
 export const AccountsProvider = ({ children }: { children: ReactNode }) => {
   const [accounts, setAccounts] = useState<Account[]>([]);
 
   const createAccount = (input: CreateAccountInput) => {
-    if (
-      accounts.some((account) => account.accountNumber === input.accountNumber)
-    ) {
+    if (findAccount(accounts, input.accountNumber)) {
       throw new Error(`Account ${input.accountNumber} already exists.`);
     }
 
@@ -38,9 +41,8 @@ export const AccountsProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const deposit = (accountNumber: string, amount: number) => {
-    if (amount <= 0) {
-      throw new Error("Enter an amount greater than 0.");
-    }
+    isAmountGreaterThanZero(amount);
+    isAccountExists(accounts, accountNumber);
 
     setAccounts((prev) =>
       prev.map((account) =>
@@ -52,17 +54,9 @@ export const AccountsProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const withdraw = (accountNumber: string, amount: number) => {
-    if (amount <= 0) {
-      throw new Error("Enter an amount greater than 0.");
-    }
+    isAmountGreaterThanZero(amount);
 
-    const accountToWithdraw = accounts.find(
-      (account) => account.accountNumber === accountNumber
-    );
-
-    if (!accountToWithdraw) {
-      throw new Error("Account not found");
-    }
+    const accountToWithdraw = isAccountExists(accounts, accountNumber);
 
     const newBalance = accountToWithdraw.balance - amount;
 
@@ -70,7 +64,7 @@ export const AccountsProvider = ({ children }: { children: ReactNode }) => {
 
     setAccounts((prev) =>
       prev.map((account) =>
-        account === accountToWithdraw
+        account.accountNumber === accountToWithdraw.accountNumber
           ? { ...account, balance: newBalance }
           : account
       )
@@ -82,12 +76,26 @@ export const AccountsProvider = ({ children }: { children: ReactNode }) => {
     accountNumberTo: string,
     amount: number
   ) => {
+    isAmountGreaterThanZero(amount);
+
     if (accountNumberFrom === accountNumberTo) {
       throw new Error("From and to account cannot be the same.");
     }
 
-    withdraw(accountNumberFrom, amount);
-    deposit(accountNumberTo, amount);
+    const accountFrom = isAccountExists(accounts, accountNumberFrom);
+    isAccountExists(accounts, accountNumberTo);
+
+    assertSufficientBalance(accountFrom, accountFrom.balance - amount);
+
+    setAccounts((prev) =>
+      prev.map((a) =>
+        a.accountNumber === accountNumberFrom
+          ? { ...a, balance: a.balance - amount }
+          : a.accountNumber === accountNumberTo
+          ? { ...a, balance: a.balance + amount }
+          : a
+      )
+    );
   };
 
   return (

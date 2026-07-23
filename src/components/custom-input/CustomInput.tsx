@@ -1,3 +1,4 @@
+import { useId } from "react";
 import styles from "./CustomInput.module.css";
 
 interface CustomInputProps {
@@ -15,10 +16,13 @@ const CustomInput = ({
   value,
   onChange,
 }: CustomInputProps) => {
+  const id = useId();
+
   return (
     <div className={styles.container}>
-      <label>{label}</label>
+      <label htmlFor={id}>{label}</label>
       <input
+        id={id}
         type={type}
         placeholder={placeholder}
         value={value}

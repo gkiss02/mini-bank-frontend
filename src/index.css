@@ -64,3 +64,7 @@ form {
   gap: 1rem;
   margin: 1rem 0;
 }
+
+form button {
+  align-self: flex-start;
+}

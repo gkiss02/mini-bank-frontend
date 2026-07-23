@@ -10,7 +10,9 @@ const RootLayout = () => {
         <p className={styles["header-subtitle"]}>EUR accounts - demo</p>
       </header>
       <MainNavigation />
-      <Outlet />
+      <main>
+        <Outlet />
+      </main>
     </>
   );
 };

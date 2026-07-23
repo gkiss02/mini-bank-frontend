@@ -1,4 +1,4 @@
-import { useId } from "react";
+import { useId, type ChangeEvent } from "react";
 import styles from "./CustomInput.module.css";
 
 interface CustomInputProps {
@@ -9,6 +9,8 @@ interface CustomInputProps {
   onChange: (value: string | number) => void;
 }
 
+const MAX_DECIMAL_PLACES = /^\d*\.?\d{0,2}$/;
+
 const CustomInput = ({
   type,
   label,
@@ -18,6 +20,16 @@ const CustomInput = ({
 }: CustomInputProps) => {
   const id = useId();
 
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const newValue = event.target.value;
+
+    if (type === "number" && !MAX_DECIMAL_PLACES.test(newValue)) {
+      return;
+    }
+
+    onChange(newValue);
+  };
+
   return (
     <div className={styles.container}>
       <label htmlFor={id}>{label}</label>
@@ -26,7 +38,7 @@ const CustomInput = ({
         type={type}
         placeholder={placeholder}
         value={value}
-        onChange={(event) => onChange(event.target.value)}
+        onChange={handleChange}
         className={styles.input}
       />
     </div>
